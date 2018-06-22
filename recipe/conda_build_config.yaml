@@ -10,6 +10,14 @@
 #   - gxx-dbg                    # [linux]
 # fortran_compiler:
 #   - gfortran-dbg               # [linux]
+c_compiler_version:
+  - 5.4
+cxx_compiler_version:
+  - 5.4
+cudatoolkit:
+  - 9.0
+cudnn:
+  - 7.1
 python:
   - 2.7
   - 3.5

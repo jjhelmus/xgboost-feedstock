@@ -27,12 +27,17 @@ requirements:
   build:
     - {{ compiler('c') }}    # [not win]
     - {{ compiler('cxx') }}  # [not win]
+    - cmake                  # [linux]
     - llvm-openmp >=4.0.1    # [osx]
     - m2w64-toolchain        # [win]
     - git                    # [not win]
     - m2-git                 # [win]
     - make                   # [not win]
     - posix                  # [win]
+  host:
+    # GPU requirements
+    - cudatoolkit {{ cudatoolkit }}*
+    - cudnn {{ cudnn }}*
 
 outputs:
   - name: libxgboost
@@ -49,9 +54,15 @@ outputs:
         - posix                  # [win]
       host:
         - llvm-openmp >=4.0.1    # [osx]
+        # GPU requirements
+        - cudatoolkit {{ cudatoolkit }}*
+        - cudnn {{ cudnn }}*
       run:
         - llvm-openmp >=4.0.1    # [osx]
         - m2w64-gcc-libs         # [win]
+        # GPU requirements
+        - cudatoolkit {{ cudatoolkit }}*
+        - cudnn {{ cudnn }}*
 
   - name: py-xgboost
     script: install-py-xgboost.sh
