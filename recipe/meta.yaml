@@ -1,3 +1,4 @@
+# GPU variant
 {% set name = "xgboost" %}
 {% set version = "0.72" %}
 
@@ -21,21 +22,16 @@ source:
     #- 0001-Do-not-define-fopen64-as-std-fopen-on-32-bit-mingw-w.patch
 
 build:
-  skip: true  # [win32 or linux32]
+  skip: true  # [not linux64 and not win64]
 
 requirements:
   build:
-    - {{ compiler('c') }}    # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - cmake                  # [linux]
-    - llvm-openmp >=4.0.1    # [osx]
-    - m2w64-toolchain        # [win]
-    - git                    # [not win]
-    - m2-git                 # [win]
-    - make                   # [not win]
-    - posix                  # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+    - git
+    - make
   host:
-    # GPU requirements
     - cudatoolkit {{ cudatoolkit }}*
     - cudnn {{ cudnn }}*
 
@@ -44,23 +40,14 @@ outputs:
     script: install-libxgboost.sh
     requirements:
       build:
-        - {{ compiler('c') }}    # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - llvm-openmp >=4.0.1    # [osx]
-        - m2w64-toolchain        # [win]
-        - git                    # [not win]
-        - m2-git                 # [win]
-        - make                   # [not win]
-        - posix                  # [win]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - git
+        - make
       host:
-        - llvm-openmp >=4.0.1    # [osx]
-        # GPU requirements
         - cudatoolkit {{ cudatoolkit }}*
         - cudnn {{ cudnn }}*
       run:
-        - llvm-openmp >=4.0.1    # [osx]
-        - m2w64-gcc-libs         # [win]
-        # GPU requirements
         - cudatoolkit {{ cudatoolkit }}*
         - cudnn {{ cudnn }}*
 
@@ -68,17 +55,14 @@ outputs:
     script: install-py-xgboost.sh
     requirements:
       build:
-        - {{ compiler('c') }}    # [not win]
-        - {{ compiler('cxx') }}  # [not win]
-        - llvm-openmp >=4.0.1    # [osx]
-        - m2w64-toolchain        # [win]
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
       host:
         - {{ pin_subpackage('libxgboost', exact=True) }}
         - python
         - setuptools
       run:
         - {{ pin_subpackage('libxgboost', exact=True) }}
-        - llvm-openmp >=4.0.1    # [osx]
         - python
         - numpy
         - scipy
