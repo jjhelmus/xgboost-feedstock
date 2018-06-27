@@ -1,4 +1,4 @@
-{% set name = "r-xgboost-gpu" %}
+{% set name = "xgboost" %}
 {% set version = "0.72" %}
 
 package:
@@ -25,39 +25,52 @@ build:
   rpaths:
     - lib/R/lib
 
-requirements:
-  build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - cmake                       # [linux]
-    - git                         # [linux]
-    - m2-git                      # [win]
-    - make                        # [linux]
-    - posix                       # [win]
-    {% if r_implementation == "mro-base" %}
-    - rtools                      # [win]
-    {% else %}
-    - m2w64-toolchain             # [win]
-    {% endif %}
-  host:
-    # GPU requirements
-    - cudatoolkit {{ cudatoolkit }}*
-    - {{ r_implementation }}
-    - r-matrix
-    - r-data.table
-    - r-magrittr
-    - r-stringi
-    - r-knitr
-  run:
-    - cudatoolkit {{ cudatoolkit }}*
-    - {{ r_implementation }}
-    - r-matrix
-    - r-data.table
-    - r-magrittr
-    - r-stringi
+outputs:
+  - name: r-xgboost
+    script: install-r-xgboost.sh
+    build:
+      track_features:
+        - r_xgboost_gpu
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - {{ compiler('cxx') }}
+        - cmake                       # [linux]
+        - git                         # [linux]
+        - make                        # [linux]
+        - m2-git                      # [win]
+        - posix                       # [win]
+        {% if r_implementation == "mro-base" %}
+        - rtools                      # [win]
+        {% else %}
+        - m2w64-toolchain             # [win]
+        {% endif %}
+      host:
+        # GPU requirements
+        - cudatoolkit {{ cudatoolkit }}*
+        - {{ r_implementation }}
+        - r-matrix
+        - r-data.table
+        - r-magrittr
+        - r-stringi
+        - r-knitr
+      run:
+        - cudatoolkit {{ cudatoolkit }}*
+        - {{ r_implementation }}
+        - r-matrix
+        - r-data.table
+        - r-magrittr
+        - r-stringi
 
-test:
-  files:
-    - test-r-xgboost.r
-  commands:
-    - Rscript test-r-xgboost.r
+  - name: r-xgboost-gpu
+    requirements:
+      host:
+        - {{ r_implementation }}
+      run:
+        - {{ r_implementation }}
+        - {{ pin_subpackage('r-xgboost', exact=True) }}
+    test:
+      files:
+        - test-r-xgboost.r
+      commands:
+        - Rscript test-r-xgboost.r
