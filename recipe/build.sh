@@ -13,5 +13,5 @@ cmake \
     -DR_LIB=ON    \
     -DCUDA_rt_LIBRARY=${LIBRT} \
     ..
-VERBOSE=1 make -j${CPU_COUNT}
-VERBOSE=1 make install -j${CPU_COUNT}
+make -j${CPU_COUNT} ${VERBOSE_CM}
+make install -j${CPU_COUNT} ${VERBOSE_CM}

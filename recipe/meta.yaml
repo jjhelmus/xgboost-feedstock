@@ -27,27 +27,25 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}    # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - {{ compiler('fortran') }}
-    - cmake                  # [linux]
-    - llvm-openmp >=4.0.1    # [osx]
-    - git                    # [not win]
-    - m2-git                 # [win]
-    - make                   # [not win]
-    - posix                  # [win]
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}   # [linux]
+    - cmake                       # [linux]
+    - git                         # [linux]
+    - m2-git                      # [win]
+    - make                        # [linux]
+    - posix                       # [win]
     {% if r_implementation == "mro-base" %}
-    - rtools                 # [win]
+    - rtools                      # [win]
     {% else %}
-    - m2w64-toolchain        # [win]
+    - m2w64-toolchain             # [win]
     {% endif %}
   host:
-    - {{ compiler('c') }}    # [not win]
-    - {{ compiler('cxx') }}  # [not win]
-    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }}  # [linux]
     # GPU requirements
     - cudatoolkit {{ cudatoolkit }}*
-    - cudnn {{ cudnn }}*
     - {{ r_implementation }}
     - r-matrix
     - r-data.table
@@ -55,7 +53,7 @@ requirements:
     - r-stringi
     - r-knitr
   run:
-    - llvm-openmp >=4.0.1    # [osx]
+    - cudatoolkit {{ cudatoolkit }}*
     - {{ r_implementation }}
     - r-matrix
     - r-data.table
