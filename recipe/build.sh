@@ -3,6 +3,13 @@
 set -e
 set -x
 
+# KLUDGE: manually activate the build environment toolchain to pick up
+# the correct compilers flags
+unset CFLAGS
+unset CXXFLAGS
+. ${BUILD_PREFIX}/etc/conda/activate.d/activate-gcc_linux-64.sh
+. ${BUILD_PREFIX}/etc/conda/activate.d/activate-gxx_linux-64.sh
+
 mkdir -p build
 cd build
 

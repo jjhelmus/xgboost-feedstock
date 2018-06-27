@@ -2,8 +2,6 @@ c_compiler_version:
   - 5.4
 cxx_compiler_version:
   - 5.4
-fortran_compiler_version:
-  - 5.4
 cudatoolkit:
   - 9.0
 cudnn:
@@ -14,4 +12,4 @@ python:
   - 3.6
 r_implementation:
   - r-base
-  #- mro-base  # [not osx and not linux32 and not win32]
+  - mro-base  # [not osx and not linux32 and not win32]

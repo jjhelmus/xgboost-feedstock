@@ -29,7 +29,6 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - {{ compiler('fortran') }}   # [linux]
     - cmake                       # [linux]
     - git                         # [linux]
     - m2-git                      # [win]
@@ -41,9 +40,6 @@ requirements:
     - m2w64-toolchain             # [win]
     {% endif %}
   host:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
-    - {{ compiler('fortran') }}  # [linux]
     # GPU requirements
     - cudatoolkit {{ cudatoolkit }}*
     - {{ r_implementation }}
