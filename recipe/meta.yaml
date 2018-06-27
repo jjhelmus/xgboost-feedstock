@@ -63,11 +63,13 @@ outputs:
         - {{ compiler('cxx') }}
       host:
         - {{ pin_subpackage('libxgboost', exact=True) }}
+        - cudatoolkit {{ cudatoolkit }}*
         - python
         - setuptools
       run:
         - {{ pin_subpackage('libxgboost', exact=True) }}
         - {{ pin_subpackage('_py-xgboost-mutex', exact=True) }}
+        - cudatoolkit {{ cudatoolkit }}*
         - python
         - numpy
         - scipy
